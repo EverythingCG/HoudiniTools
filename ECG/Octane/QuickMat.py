@@ -4,7 +4,7 @@ import os
 import hou
 scriptpath = os.path.dirname(__file__)
 
-class TestClass(QtWidgets.QWidget):
+class TextureLoader(QtWidgets.QWidget):
     button_load_textures = None
 
     def __init__(self):
@@ -53,6 +53,10 @@ class TestClass(QtWidgets.QWidget):
       mat = hou.node('/mat')
       octane_vopnet = mat.createNode('octane_vopnet')
 
+      #no path selected
+      if self.textureDir == '':
+         return
+
       projectionNode = octane_vopnet.createNode('octane::NT_PROJ_BOX')
       transformNode = octane_vopnet.createNode('octane::NT_TRANSFORM_2D')
 
@@ -62,7 +66,7 @@ class TestClass(QtWidgets.QWidget):
       thisdict = {'albedo': 1, 'roughness':6, 'bump': 43, 'normal':44 }
       textureInput = -1
 
-      self.bMatch = False
+      bMatch = False
       for f in self.textureList:
         for key in thisdict:
           if f.find(key) > -1:
@@ -72,20 +76,19 @@ class TestClass(QtWidgets.QWidget):
             RGBTexture.parm('A_FILENAME').set(self.textureDir+"/"+f)
             RGBTexture.setInput(6,projectionNode)
             RGBTexture.setInput(5,transformNode)
-            self.bMatch = True
+            bMatch = True
             break
+      
+      if not bMatch:
+         projectionNode.destroy()
+         transformNode.destroy()
 
-          if not self.bMatch:
-            print("nothing")
-            projectionNode.destroy()
-            transformNode.destroy()
-
-          octane_vopnet.layoutChildren() 
+      octane_vopnet.layoutChildren() 
            
 
 
 def show():
-    dialog = TestClass()
+    dialog = TextureLoader()
     hou.session.mainWindow = hou.qt.mainWindow()
     dialog.setParent(hou.session.mainWindow, QtCore.Qt.Window)
     dialog.show()
