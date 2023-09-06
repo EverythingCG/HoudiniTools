@@ -37,6 +37,7 @@ class InverseHull(QtWidgets.QWidget):
       standard = OutlineShader.glob('Standard_Surface')
       print(standard[0].name())
       standard[0].destroy()
+      
       #print(standard)
       #defaultNode = OutlineShader.nodeType('octane::NT_MAT_STANDARD_SURFACE').instances()
       #print(defaultNode) 
