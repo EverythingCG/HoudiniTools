@@ -30,7 +30,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="kernel">
       <item>
        <property name="text">
         <string>Direct Lighting</string>
@@ -54,10 +54,15 @@
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox_2">
+     <widget class="QComboBox" name="camera">
       <item>
        <property name="text">
         <string>Thin Lens</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Universal</string>
        </property>
       </item>
       <item>
@@ -68,11 +73,6 @@
       <item>
        <property name="text">
         <string>Baking</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Universal</string>
        </property>
       </item>
      </widget>
