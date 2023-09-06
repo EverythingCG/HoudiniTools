@@ -5,7 +5,7 @@ import hou
 scriptpath = os.path.dirname(__file__)
 
 class TextureLoader(QtWidgets.QWidget):
-    button_load_textures = None
+    
 
     def __init__(self):
         QtWidgets.QWidget.__init__(self)
