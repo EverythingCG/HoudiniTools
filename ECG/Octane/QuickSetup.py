@@ -48,27 +48,21 @@ class OctaneQuickSetup(QtWidgets.QWidget):
         OctaneROP_node = hou.node('/out').createNode("Octane_ROP","Octane_ROP"+self.lineEdit.text())
         OctaneVOPNET = hou.node('/mat').createNode("octane_vopnet", 'renderTarget'+self.lineEdit.text())
         
+        #clean up vopnet
+        group = OctaneVOPNET.parmTemplateGroup()
+        group.hideFolder('OpenGL',True)
+        OctaneVOPNET.setParmTemplateGroup(group)
+        vopnet_children = OctaneVOPNET.children()
+        for child in vopnet_children:
+            child.destroy()
+
+        #camera handling
         OctaneCam = None
         cameras = hou.objNodeTypeCategory().nodeType('cam').instances() 
         if len(cameras) == 0:
             OctaneCam = hou.node('/obj').createNode("cam", 'cam'+self.lineEdit.text())
         else:
             OctaneCam = cameras[0]
-        
-        
-        group = OctaneVOPNET.parmTemplateGroup()
-        l = group.entries()
-        for i in l:
-            print(i)
-        
-        
-        group.hideFolder('OpenGL',True)
-        OctaneVOPNET.setParmTemplateGroup(group)
-        
-        vopnet_children = OctaneVOPNET.children()
-        for child in vopnet_children:
-            child.destroy()
-        
         
         #setup custom kernel menu param
         menuName = "kernel"
@@ -128,7 +122,6 @@ class OctaneQuickSetup(QtWidgets.QWidget):
         OctaneROP_node.parm('HO_renderTarget').set(OctaneVOPNET.path())
         OctaneROP_node.parm('HO_renderCamera').set(OctaneCam.path())
         OctaneROP_node.parm('HO_iprCamera').set(OctaneCam.path())
-        print(OctaneCam.path())
 
         minimizeNodes(OctaneVOPNET.children())
         OctaneVOPNET.layoutChildren() 
