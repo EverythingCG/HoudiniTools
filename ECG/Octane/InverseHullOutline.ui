@@ -19,24 +19,50 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QPushButton" name="selectgeo">
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>30</y>
-     <width>311</width>
-     <height>251</height>
+     <y>100</y>
+     <width>309</width>
+     <height>24</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="setup">
-      <property name="text">
-       <string>Setup</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="text">
+    <string>Select Geo</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="geolabel">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>130</y>
+     <width>309</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Selected Geo: NONE</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="setup">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>200</y>
+     <width>309</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Setup</string>
+   </property>
   </widget>
  </widget>
  <resources/>
