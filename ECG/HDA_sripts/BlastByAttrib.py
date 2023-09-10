@@ -11,23 +11,29 @@ def createNodes():
     if not checkAttribExistance(attribType, attribName,variableType,groupNameMap):
         return
     
-    
     uniqueAttributes = []
     try:
         uniqueAttributes = getUniqueAttributes(attribType, attribName, variableType)
     except hou.OperationFailed:
         print('Primitive Type or Variable Type missmatch, check input parameters and try again')
         
-    #separate geo
+    #create blast nodes per variable
+    count = 0
     for attrib in uniqueAttributes:
         blast_node = node.parent().createNode('blast', 'blast_'+str(attrib))
         blast_node.setInput(0,node)
         blast_node.parm('group').set('@'+attribName+'='+str(attrib))
         blast_node.parm('grouptype').set(groupTypeMap[attribType])
-
+        new_pos = node.position()
+        new_pos[0] += count
+        new_pos[1] -= 1
+        blast_node.setPosition(new_pos)
+        count+=2
+        
+        
         
 def getUniqueAttributes(attribType, attribName, variableType):
-    
+    #call after chacking existance of attrib
     node = hou.pwd()
     geo = node.geometry()
     #float/int
@@ -48,7 +54,6 @@ def getUniqueAttributes(attribType, attribName, variableType):
         if attribType == 1:
             uniqueAttributes = set(geo.primStringAttribValues(attribName))
 
-    print(uniqueAttributes)
     return uniqueAttributes
     
 def checkAttribExistance(attribType, attribName,variableType,groupNameMap):
@@ -67,3 +72,4 @@ def checkAttribExistance(attribType, attribName,variableType,groupNameMap):
         return 0
    
     return 1 
+    
