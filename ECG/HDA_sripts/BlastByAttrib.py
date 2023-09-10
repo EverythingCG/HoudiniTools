@@ -1,10 +1,6 @@
-node = hou.pwd()
-geo = node.geometry()
-
-
-
 def createNodes():
-
+    node = hou.pwd()
+    geo = node.geometry()
     attribType = node.parm('attribute_type').eval()
     variableType = node.parm('variable_type').eval()
     attribName = node.parm('attrib_name').eval()
@@ -15,12 +11,12 @@ def createNodes():
     if not checkAttribExistance(attribType, attribName,variableType,groupNameMap):
         return
     
-    #uniqueAttributes = getUniqueAttributes(attribType, attribName, variableType)
+    
     uniqueAttributes = []
     try:
         uniqueAttributes = getUniqueAttributes(attribType, attribName, variableType)
     except hou.OperationFailed:
-        print('Type or Variable missmatch, check input parameters and try again')
+        print('Primitive Type or Variable Type missmatch, check input parameters and try again')
         
     #separate geo
     for attrib in uniqueAttributes:
@@ -31,8 +27,9 @@ def createNodes():
 
         
 def getUniqueAttributes(attribType, attribName, variableType):
-    #call after chacking existance of attrib
-   
+    
+    node = hou.pwd()
+    geo = node.geometry()
     #float/int
     if variableType == 0:
         #point
@@ -55,7 +52,8 @@ def getUniqueAttributes(attribType, attribName, variableType):
     return uniqueAttributes
     
 def checkAttribExistance(attribType, attribName,variableType,groupNameMap):
-    
+    node = hou.pwd()
+    geo = node.geometry()
     #point
     if attribType == 0:
         temp = geo.findPointAttrib(attribName)
@@ -69,6 +67,3 @@ def checkAttribExistance(attribType, attribName,variableType,groupNameMap):
         return 0
    
     return 1 
-    
-
-     
