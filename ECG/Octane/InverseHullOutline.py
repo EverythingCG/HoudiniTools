@@ -39,6 +39,7 @@ class InverseHull(QtWidgets.QWidget):
         self.selectionName = ''
         self.validSelection = False
         self.OutlineShader = None
+        self.selectionGEO = None
         
     
     def select_outline_geo(self):
@@ -49,6 +50,7 @@ class InverseHull(QtWidgets.QWidget):
             self.validSelection = True
             self.button_setup.setEnabled(True)
             self.geo_label.setText("Selected Geo: "+self.operatorPath)
+            self.selectionGEO = selectedNode.parent()
         else:
             print("invalid selection: select a node in geo context")
         
@@ -56,6 +58,7 @@ class InverseHull(QtWidgets.QWidget):
     def create_outline_geo(self):
         OutlineGeo = hou.node('/obj').createNode('geo', self.selectionName+'_OUTLINE')
         OutlineGeo.parm('octane_objprop_shadowVis').set(False)
+        OutlineGeo.setInput(0,self.selectionGEO)
         ObjectMerge = OutlineGeo.createNode('object_merge')
         ObjectMerge.parm('objpath1').set(self.operatorPath)
 
